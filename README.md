@@ -15,9 +15,9 @@ The CMN directory has hnf_capture2.sh and process_cmn.py which help in monitorin
 For detailed documentation, please refer to the following PDFs:
 
 - Perf Stats & Backend_CSV_processing combined [Perf Stats Usage](Documentation-perf_stat.pdf)
-- CMN [PDF 2: CMN Usage](docs/pdf2.pdf)
+- CMN [PDF 2: CMN Usage](placeholder/pdf2.pdf)
 - SPE_Perf_Record: Official Documentation - 
-[PDF 3: SPE Usage](docs/pdf3.pdf) 
+[PDF 3: SPE Usage](placeholder/pdf3.pdf) 
 
 
 ## Installation
