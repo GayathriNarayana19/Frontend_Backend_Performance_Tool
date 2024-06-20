@@ -1,16 +1,16 @@
 #!/bin/bash
-# This script captures the perf events on specified worker core for 5 sec.
+# This script captures the perf events on specified worker core for 10 sec.
 if [ "$#" -lt 2 ]; then
     echo "Usage: $0 <output_directory> <cores>"
-    echo "Example: $0 /home/ubuntu/test_collect \"37 33\""
+    echo "Example: $0 /home/ubuntu/test_collect \"37,33\""
     exit 1
 fi
 #log_file="$1"
 output_directory="$1"
-worker_core=($2)
+worker_core="$2"
 #worker_core="42"
 #output_directory="/home/ubuntu/top_down_analysis"
-sleep_sec=2
+sleep_sec=10
 if [ ! -d "$output_directory" ]; then
     mkdir -p "$output_directory"
 fi
@@ -207,17 +207,8 @@ run_perf() {
 	local op_file="${output_directory}/${e// /_}"
 	local op_file="${op_file//\'/}"  # Remove apostrophes
 	local batch="${perf_events[$e]}" #extracts values corresponding to  perf_events keys
-	for core in "${worker_core[@]}"; do
-		core_directory="$output_directory/C$core"
-
-		# Create directory for each core if it doesn't exist
-		if [ ! -d "$core_directory" ]; then
-			mkdir -p "$core_directory"
-		fi
-                #echo "$op_file"
-        	#perf stat -A --output "${op_file}_core_${core}.txt" -e "$batch" -C "$core" -x "," sleep "$sleep_sec"
-        	perf stat -A --output "${core_directory}/${e// /_}_core_${core}.txt" -e "$batch" -C "$core" -x "," sleep "$sleep_sec"
-    	done
+        
+	perf stat -A --output "$op_file" -e "$batch" -C "$worker_core" -x "," sleep "$sleep_sec"
 
 }
 # Iterate through worker cores and run perf serially
