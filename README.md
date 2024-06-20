@@ -25,6 +25,6 @@ For detailed documentation, please refer to the following PDFs:
 ```bash
 git clone https://github.com/GayathriNarayana19/Frontend_Backend_Performance_Tool/
 cd Frontend_Backend_Performance_Tool
-
+```
 ## License
-This project is licensed under the GNU General Public license - see the LICENSE file for details.
+This project is licensed under the GNU General Public license v3.0 - see the LICENSE file for details.
