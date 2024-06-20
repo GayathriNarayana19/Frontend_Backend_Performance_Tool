@@ -1,16 +1,13 @@
 #!/bin/bash
-# This script captures the perf events on specified worker core for 10 sec.
-if [ "$#" -lt 2 ]; then
-    echo "Usage: $0 <output_directory> <cores>"
-    echo "Example: $0 /home/ubuntu/test_collect \"37,33\""
+# This script captures the perf events on specified worker core for user specified sleep interval. 
+if [ "$#" -lt 3 ]; then
+    echo "Usage: $0 <output_directory> <cores> <sleep>"
+    echo "Example: $0 /home/ubuntu/test_collect \"37,33\" 10"
     exit 1
 fi
-#log_file="$1"
 output_directory="$1"
 worker_core="$2"
-#worker_core="42"
-#output_directory="/home/ubuntu/top_down_analysis"
-sleep_sec=10
+sleep_sec="$3"
 if [ ! -d "$output_directory" ]; then
     mkdir -p "$output_directory"
 fi
