@@ -16,6 +16,7 @@ For detailed documentation, please refer to the following PDFs:
 
 - Perf Stats & Backend_CSV_processing combined [Perf Stats Usage](Documentation-perf_stat.pdf)
 - CMN [PDF 2: CMN Usage](Documentation-CMN-hnf.pdf)
+- SPE Parser Post Processing - Sorting based on Latency & Program Counter [SPE_parser_sort_script-Usage](Documentation - SPE_parser_post_processing.docx)
 - SPE_Perf_Record: Official Documentation - 
 [PDF 3: SPE Usage](Documentation-SPE_tool_script_version.pdf) 
 
