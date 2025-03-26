@@ -22,31 +22,6 @@ for filename in os.listdir(directory):
         for row in file:
             values = row.strip().split(',')
 
-            if len(values) < 4:
-                continue  # Skip malformed rows
-
-            try:
-                event_value = float(values[0].strip())
-                event_name = values[2].strip()
-
-                # Use core ID if available, else use pid-based marker
-                core = values[1].strip() if values[1].strip() else f"pid:{filename}"
-
-                if core not in core_data:
-                    core_data[core] = {}
-                if filename not in core_data[core]:
-                    core_data[core][filename] = {}
-
-                core_data[core][filename][event_name] = event_value
-            except ValueError:
-                continue  # Skip rows where event_value isn't a number
-'''
-for filename in os.listdir(directory):
-    file_path = os.path.join(directory, filename)
-    with open(file_path, 'r') as file:
-        for row in file:
-            values = row.strip().split(',')
-
             if len(values) >= 6:
                 core = values[0]
                 event_name = values[3].split()[0]  # Extract first word (event)
@@ -59,7 +34,7 @@ for filename in os.listdir(directory):
                     core_data[core][filename] = {}
 
                 core_data[core][filename][event_name] = event_value
-'''
+
 #  Step 2: Process Data and Generate CSV
 data = []
 
@@ -124,7 +99,7 @@ for core, filenames in core_data.items():
                 division_result = event_1 / event_2 if event_2 != 0 else "NAN"
                 data.append((core, filename, event_1_name, event_1, event_2_name, event_2, division_result, xlabel))
 
-#  Step 3: Save Data to CSV
+# 📌 Step 3: Save Data to CSV
 with open(csv_filename, 'w', newline='', encoding='utf-8') as csvfile:
     csv_writer = csv.writer(csvfile)
 
