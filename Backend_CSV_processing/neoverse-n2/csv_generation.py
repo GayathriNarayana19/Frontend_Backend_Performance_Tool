@@ -14,7 +14,42 @@ if not os.path.isdir(directory):
     sys.exit(1)
 
 core_data = {}
+for filename in os.listdir(directory):
+    file_path = os.path.join(directory, filename)
+    with open(file_path, 'r') as file:
+        for row in file:
+            if row.startswith("#") or not row.strip():
+                continue  
 
+            values = row.strip().split(',')
+
+            try:
+                if len(values) >= 6 and values[0].startswith("CPU"):
+                    # Core-based format
+                    core = values[0].strip()
+                    event_value = float(values[1].strip())
+                    event_name = values[3].strip().split()[0]  # core mode
+
+                elif len(values) >= 4 and values[1].strip() == "":
+                    # PID-based format
+                    core = f"pid:{filename}"
+                    event_value = float(values[0].strip())
+                    event_name = values[2].strip()  # pid mode
+
+                else:
+                    continue  
+
+                # Build data structure
+                if core not in core_data:
+                    core_data[core] = {}
+                if filename not in core_data[core]:
+                    core_data[core][filename] = {}
+
+                core_data[core][filename][event_name] = event_value
+
+            except ValueError:
+                continue  # Skip lines where float conversion fails
+'''
 #  Step 1: Read all log files and store data
 for filename in os.listdir(directory):
     file_path = os.path.join(directory, filename)
@@ -40,7 +75,7 @@ for filename in os.listdir(directory):
                 core_data[core][filename][event_name] = event_value
             except ValueError:
                 continue  # Skip rows where event_value isn't a number
-'''
+
 for filename in os.listdir(directory):
     file_path = os.path.join(directory, filename)
     with open(file_path, 'r') as file:
