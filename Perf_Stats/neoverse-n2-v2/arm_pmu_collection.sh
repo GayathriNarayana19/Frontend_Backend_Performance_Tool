@@ -1,12 +1,16 @@
 #!/bin/bash
 # This script captures the perf events on specified worker core for user specified sleep interval. 
+
 if [ "$#" -lt 3 ]; then
-    echo "Usage: $0 <output_directory> <cores> <sleep>"
-    echo "Example: $0 /home/ubuntu/test_collect \"37,33\" 10"
+    echo "Usage: $0 <output_directory> <core(s)|pid> <sleep>"
+    echo "Example (core): $0 /home/ubuntu/test_collect \"37,33\" 10"
+    echo "Example (pid):  $0 /home/ubuntu/test_collect pid:1234 10"
     exit 1
 fi
+
 output_directory="$1"
-worker_core="$2"
+#worker_core="$2"
+target="$2"
 sleep_sec="$3"
 if [ ! -d "$output_directory" ]; then
     mkdir -p "$output_directory"
@@ -218,7 +222,13 @@ run_perf() {
 	local op_file="${op_file//\'/}"  # Remove apostrophes
 	local batch="${perf_events[$e]}" #extracts values corresponding to  perf_events keys
         
-	perf stat -A --output "$op_file" -e "$batch" -C "$worker_core" -x "," sleep "$sleep_sec"
+	if [[ "$target" == pid:* ]]; then
+	    local pid="${target#pid:}"
+            perf stat --output "$op_file" -e "$batch" -p "$pid" -x "," sleep "$sleep_sec"
+	else
+	    perf stat -A --output "$op_file" -e "$batch" -C "$target" -x "," sleep "$sleep_sec"
+	fi      
+	#perf stat -A --output "$op_file" -e "$batch" -C "$worker_core" -x "," sleep "$sleep_sec"
 
 }
 # Iterate through worker cores and run perf serially
