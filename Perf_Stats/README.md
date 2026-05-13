@@ -26,7 +26,9 @@ python3 csv_generation.py ./perf_data/output_dir test1.csv
 python3 csv_split.py -csv test1.csv -dir_name_for_csvs /home/ubuntu/split-csvs-test1
 ```
 
-## Plotting : Go to https://github.com/GayathriNarayana19/Performance_Analysis_Backend/tree/main/Perf_Stats_Backend repo to execute the below for rendering plots. 
+## Plotting 
+
+###Go to https://github.com/GayathriNarayana19/Performance_Analysis_Backend/tree/main/Perf_Stats_Backend repo to execute the below for rendering plots. 
 
 ```bash
 python3 plotting_perf_stat_v2.py \
